@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: smartclass-backend
+    env: docker
+    plan: free
+    dockerContext: .
+    dockerFilePath: Dockerfile
+    healthCheckPath: /api/auth/signin # Or any other public endpoint
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRATION
+        value: "86400000"
+      - key: ALLOWED_ORIGIN
+        value: "https://smart-class-nw34.onrender.com"
+      - key: PORT
+        value: "8080"
+
