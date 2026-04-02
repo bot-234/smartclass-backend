@@ -7,8 +7,9 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Run stage
-FROM eclipse-temurin:17-jdk
+FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=build /app/target/backend-0.0.1-SNAPSHOT.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENV PORT=8080
+EXPOSE ${PORT}
+ENTRYPOINT java -Dserver.port=${PORT} -jar app.jar
