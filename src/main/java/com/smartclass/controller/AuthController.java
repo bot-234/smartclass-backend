@@ -1,8 +1,10 @@
 package com.smartclass.controller;
 
 import com.smartclass.entity.User;
+import com.smartclass.entity.Role;
 import com.smartclass.payload.request.ChangePasswordRequest;
 import com.smartclass.payload.request.LoginRequest;
+import com.smartclass.payload.request.SignupRequest;
 import com.smartclass.payload.response.JwtResponse;
 import com.smartclass.payload.response.MessageResponse;
 import com.smartclass.repository.UserRepository;
@@ -58,6 +60,27 @@ public class AuthController {
         } catch (Exception e) {
             return ResponseEntity.status(401).body(new MessageResponse("Error: Unauthorized"));
         }
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
+        if (userRepository.existsByName(signUpRequest.getName())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Username is already taken!"));
+        }
+
+        // Create new user's account
+        User user = new User();
+        user.setName(signUpRequest.getName());
+        user.setEmail(signUpRequest.getEmail());
+        user.setPassword(encoder.encode(signUpRequest.getPassword()));
+        user.setRole(Role.STUDENT); // Default role
+        user.setFirstLogin(true);
+
+        userRepository.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
     @PostMapping("/change-password")
