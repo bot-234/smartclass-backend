@@ -22,5 +22,7 @@ public class Subject {
     private User teacher;
 
     private String branch;
+
+    @Column(name = "subject_year")
     private String year;
 }
