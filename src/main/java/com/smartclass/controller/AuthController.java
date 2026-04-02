@@ -21,8 +21,12 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api")
 public class AuthController {
+
+    @GetMapping("/")
+    public ResponseEntity<String> healthCheck() {
+        return ResponseEntity.ok("SmartClass Backend is running.");
+    }
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -36,7 +40,7 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
         System.out.println("Login API HIT");
         try {
@@ -60,7 +64,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/change-password")
+    @PostMapping("/api/change-password")
     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request, Authentication authentication) {
         if (authentication == null) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Unauthorized."));
