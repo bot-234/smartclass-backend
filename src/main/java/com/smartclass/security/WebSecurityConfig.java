@@ -63,7 +63,7 @@ public class WebSecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(request -> {
                     var corsConfiguration = new CorsConfiguration();
-                    corsConfiguration.setAllowedOrigins(List.of(allowedOrigin, "https://smart-class-nw34.onrender.com", "http://localhost:3000"));
+                    corsConfiguration.setAllowedOrigins(List.of(allowedOrigin, "https://smart-dass-nw34.onrender.com", "http://localhost:3000"));
                     corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
                     corsConfiguration.setExposedHeaders(List.of("Authorization"));
